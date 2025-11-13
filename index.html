@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale-1.0">
+<title>Peta Legenda Indonesia Interaktif</title>
+<!-- Memuat Tailwind CSS untuk styling -->
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+/* CSS tambahan untuk efek 'hotspot' */
+.hotspot {
+position: absolute;
+width: 24px;
+height: 24px;
+background-color: rgba(0, 123, 255, 0.7);
+border-radius: 50%;
+cursor: pointer;
+border: 2px solid white;
+box-shadow: 0 0 10px rgba(0,0,0,0.5);
+transition: all 0.3s ease;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.hotspot:hover {
+transform: scale(1.2);
+background-color: rgba(255, 0, 0, 0.9);
+}
+/* Animasi berdenyut untuk menarik perhatian */
+.hotspot::after {
+content: '';
+position: absolute;
+width: 100%;
+height: 100%;
+border-radius: 50%;
+background-color: rgba(0, 123, 255, 0.5);
+animation: pulse 1.5s infinite;
+z-index: 1;
+}
+@keyframes pulse {
+0% {
+transform: scale(1);
+opacity: 0.7;
+}
+100% {
+
+transform scale/2510
+@keyframes pulse {
+0% {
+transform: scale(1);
+opacity: 0.7;
+}
+100% {
+transform: scale(2.5);
+opacity: 0;
+}
+}
+</style>
+</head>
+<body class="bg-gray-100 font-sans flex items-center justify-center min-h-screen p-4">
+
+<div class="w-full max-w-4x1 mx-auto">
+<h1 class="text-2x1 md:text-4xl font-bold text-center text-gray-800 mb-4">Peta Legenda
+Nusantara</h1>
+<p class="text-center text-gray-600 mb-6">Klik pada titik di peta untuk membaca cerita legenda dari wilayah tersebut.</p>
+<!--
+KONTAINER PETA:
+'position: relative' sangat penting. Ini adalah "induk"
+<!--
+yang akan menjadi acuan untuk 'position: absolute' dari hotspot.
+-->
+<div class="relative w-full rounded-lg shadow-xl overflow-hidden">
+<!--
+GAMBAR PETA:
+Ganti 'src' di bawah ini dengan nama file peta Anda (misal: "peta-indonesia.jpg"). 
+Pastikan gambar dan file index.html ini berada di folder yang sama.
+-->
+<img src="peta-indonesia.jpg"
+alt="Peta Indonesia"
+class="w-full h-auto object-cover">
+<!--
+HOTSPOT (Titik-titik yang Bisa Diklik)
+Atribut Kunci:
+- class="hotspot": Untuk styling CSS (titik biru berdenyut).
+- data-region="nama-wilayah": Atribut data ini digunakan oleh JavaScript untuk mengidentifikasi wilayah mana yang diklik.
+- style="top: XX%; left: XX%;": Ini adalah ATRIBUT POSISI.
+Anda HARUS mengubah nilai 'top' (jarak dari atas) dan 'left' (jarak dari kiri) agar sesuai dengan lokasi di gambar peta JPG Anda.
+-->
+<!-- Hotspot Contoh 1: Sumatera (misal: Aceh)-->
+<div class="hotspot"
+data-region="sumatera"
+style="top: 15%; left: 10%;">
+</div>
+<!-- Hotspot Contoh 2: Jawa (misal: Jawa Barat) -->
+<div class="hotspot"
+data-region="jawa"
+style="top: 70%; left: 38%;">
+</div>
+<!-- Hotspot Contoh 3: Kalimantan -->
+<div class="hotspot"
+data-region="kalimantan"
+style="top: 45%; left: 50%;">
+</div>
+<!-- Hotspot Contoh 4: Papua -->
+<div class="hotspot"
+data-region="papua"
+style="top: 60%; left: 85%;">
+</div>
+<!-- Tambahkan hotspot lain sebanyak yang Anda butuhkan -->
+</div>
+</div>
+<!--
+MODAL (Jendela Pop-up Informasi)
+Awalnya disembunyikan (class="hidden"). JavaScript akan menampilkannya.
+-->
+<div id="info-modal"
+class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 hidden
+z-50">
+<div class="bg-white w-full max-w-lg rounded-lg shadow-2xl overflow-hidden relative
+animate-fade-in"> <!-- Modifikasi: Hapus p-6, tambahkan overflow-hidden -->
+<!-- Tombol Close -->
+<button id="close-modal"
+class="absolute top-3 right-3 text-gray-500 hover: text-gray-800 text-3xl z-10
+bg-white bg-opacity-50 rounded-full px-2">&times;</button> <!-- Modifikasi: Z-index -->
+<!-- Foto Ilustrasi (BARU) -->
+<img id="info-image" src="" alt="Ilustrasi Legenda" class="w-full h-64 object-cover">
+<!-- BARU -->
+<!-- Konten Legenda (akan diisi oleh JavaScript) -->
+<div class="p-6"> <!-- BARU: Wrapper untuk padding teks -->
+<h2 id="info-title" class="text-3xl font-bold text-gray-900 mb-4"></h2>
+<p id="info-content" class="text-gray-700 text-base leading-relaxed"></p>
+<!--
+MODAL (Jendela Pop-up Informasi)
+Awalnya disembunyikan (class="hidden"). JavaScript akan menampilkannya.
+-->
+<div id="info-modal"
+class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 hidden
+z-50">
+<div class="bg-white w-full max-w-lg rounded-lg shadow-2xl overflow-hidden relative
+animate-fade-in"> <!-- Modifikasi: Hapus p-6, tambahkan overflow-hidden -->
+<!-- Tombol Close -->
+<button id="close-modal"
+class="absolute top-3 right-3 text-gray-500 hover: text-gray-800 text-3xl z-10
+bg-white bg-opacity-50 rounded-full px-2">&times;</button> <!-- Modifikasi: Z-index -->
+<!-- Foto Ilustrasi (BARU) -->
+<img id="info-image" src="" alt="Ilustrasi Legenda" class="w-full h-64 object-cover">
+<!-- BARU -->
+<!-- Konten Legenda (akan diisi oleh JavaScript) -->
+<div class="p-6"> <!-- BARU: Wrapper untuk padding teks -->
+<h2 id="info-title" class="text-3xl font-bold text-gray-900 mb-4"></h2>
+<p id="info-content" class="text-gray-700 text-base leading-relaxed"></p>
+<!-- Konten Legenda (akan diisi oleh JavaScript) -->
+<div class="p-6"> <!-- BARU: Wrapper untuk padding teks -->
+<h2 id="info-title" class="text-3xl font-bold text-gray-900 mb-4"></h2>
+<p id="info-content" class="text-gray-700 text-base leading-relaxed"></p>
+</div>
+</div>
+</div>
+<script>
+// --- DATABASE CERITA LEGENDA ---
+// Anda bisa tambahkan atau ubah semua data di sini.
+// Pastikan nama properti (misal: "sumatera") SAMA PERSIS dengan
+// nilai di 'data-region' pada HTML di atas.
+const legendData = {
+"sumatera": {
+title: "Legenda Danau Toba",
+story: "Di sebuah desa di wilayah Sumatera Utara, hiduplah seorang petani bernama Toba. Suatu hari, ia memancing ikan mas yang sangat indah. Ikan itu berubah menjadi seorang putri cantik yang dikutuk. Mereka menikah dengan syarat Toba tidak boleh membocorkan asal-usul sang putri. Mereka memiliki anak bernama Samosir. Suatu hari, Toba marah dan menyebut Samosir 'anak ikan'. Janji itu dilanggar, sang putri menangis hebat, dan air matanya menyebabkan banjir besar yang kini dikenal sebagai Danau Toba.",
+imageSrc: "danautoba.jpg" // BARU
+},
+"jawa": {
+title: "Legenda Sangkuriang",
+story: "Cerita tentang Sangkuriang yang jatuh cinta pada ibunya sendiri, Dayang Sumbi. Untuk mencegah pernikahan terlarang, Dayang Sumbi meminta Sangkuriang membuat perahu dan danau dalam satu malam. Ketika Sangkuriang hampir berhasil dengan bantuan jin, Dayang Sumbi memukul lesung dan mengibaskan selendangnya, menipu ayam agar berkokok dan fajar palsu muncul. Sangkuriang marah, menendang perahu yang belum selesai, dan perahu itu terbalik menjadi gunung Tangkuban Perahu.",
+imageSrc: "tangkubanprahu.jpg" // BARU
+},
+"kalimantan": {
+title: "Legenda Batu Menangis",
+story: "Di sebuah bukit di Kalimantan Barat, hiduplah seorang janda miskin dengan putrinya yang sangat cantik namun pemalas dan manja. Ia selalu membuat ibunya sedih. Suatu hari, saat berjalan ke pasar, si anak berjalan di depan dan ibunya di belakang membawa keranjang berat. Ketika ditanya siapa wanita di belakangnya, si anak menjawab bahwa itu adalah pembantunya. Ibunya sangat sedih dan berdoa. Perlahan, kaki si anak berubah menjadi batu, dan ia menangis memohon ampun, namun terlambat. Seluruh tubuhnya menjadi batu yang terus mengeluarkan air mata.",
+imageSrc: "batumenangis.jpg" // BARU
+},
+"papua": {
+title: "Asal Usul Burung Cenderawasih",
+story: "Alkisah, di pedalaman Papua, ada seorang wanita yang hidup dengan anjingnya. Suatu hari, saat berburu, anjingnya menemukan telur ajaib. Telur itu menetas menjadi seorang bayi laki-laki yang diberi nama Kweiya. Kweiya tumbuh menjadi pemuda tampan namun sakti. Suatu hari, ia memutuskan untuk 'pergi' ke surga. Ia menari dengan indah, dan perlahan-lahan bulu-bulu indah tumbuh di tubuhnya, mengubahnya menjadi burung Cenderawasih yang terbang ke langit.",
+imageSrc: "cendrawasih.jpg" // BARU
+}
+};
+// --- LOGIKA JAVASCRIPT ---
+// 1. Ambil semua elemen yang kita butuhkan
+const modal = document.getElementById('info-modal');
+const modalTitle = document.getElementById('info-title');
+const modalContent = document.getElementById('info-content');
+const modalImage document.getElementById('info-image'); // BARU
+const closeModalBtn = document.getElementById('close-modal');
+// 'querySelectorAll' mengambil SEMUA elemen dengan class 'hotspot'
+const hotspots = document.querySelectorAll('.hotspot');
+// 2. Fungsi untuk menampilkan modal
+function showModal(region) {
+const data = legendData[region];
+if (data) {
+// Isi konten modal
+modalTitle.textContent = data.title;
+modalContent.textContent = data.story;
+modalImage.src = data.imageSrc; // BARU
+modalImage.alt = "Ilustrasi " + data.title; // BARU (Baik untuk aksesibilitas)
+// Tampilkan modal
+modal.classList.remove('hidden');
+} else {
+console.error("Data tidak ditemukan untuk region:", region);
+}
+}
+// 3. Fungsi untuk menyembunyikan modal
+function hideModal() {
+modal.classList.add('hidden');
+modalImage.src = ""; // BARU (Membersihkan gambar saat ditutup)
+}
+// 4. Tambahkan 'event listener' (pendengar aksi) ke setiap hotspot 
+hotspots.forEach(spot => {
+spot.addEventListener('click', () => {
+// Ambil nilai dari atribut 'data-region' 
+const regionName = spot.dataset.region;
+showModal(regionName);
+});
+});
+// 5. Tambahkan 'event listener' untuk tombol close 
+closeModalBtn.addEventListener('click', hideModal);
+// 6. (Opsional) Tutup modal jika mengklik di luar area konten 
+modal.addEventListener('click', (event) => {
+if (event.target === modal) {
+hideModal();
+}
+});
+</script>
+</body>
+</html>
